@@ -4,19 +4,6 @@
 KEY_PATH="$HOME/.ssh/id_rsa"
 PUBLIC_KEY_PATH="$HOME/.ssh/id_rsa.pub"
 
-# Function to check if a port is in use
-PORT=80
-NEW_PORT=8080
-
-is_port_in_use() {
-    local port=$1
-    if lsof -iTCP:"$port" -sTCP:LISTEN -t >/dev/null ; then
-        return 0
-    else
-        return 1
-    fi
-}
-
 
 build_r() {
     cd hireme-infra
@@ -47,6 +34,8 @@ if [[ "$user_response" == "yes" ]]; then
     # Check if the public key file exists and display it
     if [ -f "$PUBLIC_KEY_PATH" ]; then
         clone_repo "hireme-infra" "git@github.com:gentis/hireme-infra.git"
+        echo "Enter to hireme-infra directory..."
+        cd hireme-infra        
         clone_repo "hireme-core" "git@github.com:gentis/hireme-core.git"
         clone_repo "hireme-front" "git@github.com:gentis/hireme-front.git"
         clone_repo "hireme-console" "git@github.com:gentis/hireme-console.git"
